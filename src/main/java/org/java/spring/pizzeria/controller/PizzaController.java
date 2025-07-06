@@ -4,8 +4,18 @@ import org.java.spring.pizzeria.model.Pizza;
 import org.java.spring.pizzeria.repository.PizzaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import jakarta.validation.Valid;
+
+
+
+
+
 
 
 
@@ -35,6 +45,28 @@ public class PizzaController {
         model.addAttribute("pizza", pizzaRepository.findById(id).get());
         return "pizza/show";
     }
+
+    @GetMapping("/create")
+    public String create(Model model){
+
+        model.addAttribute("pizza", new Pizza());
+
+        return "/pizza/create";
+    }
+
+    @PostMapping("/create")
+    public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()){
+            return "/pizza/create";
+        }
+        
+        pizzaRepository.save(pizza);
+        
+        return "redirect:/";
+    }
+    
+    
     
 }
 
