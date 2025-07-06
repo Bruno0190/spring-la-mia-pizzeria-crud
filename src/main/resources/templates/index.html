@@ -27,6 +27,9 @@
                     <td th:text="${#numbers.formatDecimal(pizza.prezzo, 1, 'COMMA', 2, 'POINT')}">Prezzo</td>
                     <td><a th:href="@{'/' + ${pizza.id}}" class="btn btn-primary btn-sm active" role="button">Dettagli</a></td>
                 </tr>
+                <a th:href="@{/create}" class="btn btn-success mb-3">Crea nuova pizza</a>
+
+
             </tbody>
         </table>
     </div>
