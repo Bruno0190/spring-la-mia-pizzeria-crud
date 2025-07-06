@@ -5,6 +5,9 @@ import org.java.spring.pizzeria.repository.PizzaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
 
 /*L'annotazione @Controller serve dire che questa classe è quella che risponde alle richieste HTTP e restituisce pagine web. è il primo impatto con l'utente come un cameriere che ti serve un menu appena giunti al ristorante. */
 @Controller
@@ -26,5 +29,12 @@ public class PizzaController {
         model.addAttribute("pizze", pizze);                   
         return "index";                                        
     }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("pizza", pizzaRepository.findById(id).get());
+        return "pizza/show";
+    }
+    
 }
 
