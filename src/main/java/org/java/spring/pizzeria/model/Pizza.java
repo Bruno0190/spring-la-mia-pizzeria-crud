@@ -1,7 +1,7 @@
-package org.java.spring.pizzeria;
+package org.java.spring.pizzeria.model;
 
 import java.math.BigDecimal;
-/*jakarta.perstistence è il pacchetto di annotazioni che si usano nel codice per dire a JPA cosa ritenere cosa e come. JavaPersistenceAPI è una specifica che serve a "mappare" oggetti JAva a tabelle di DATABASE e gestire operazioni CRUD (Create, Read, Update, Delete). ATTENZIONE: affinchè si possano importare determinati pacchetti può essere necessario come in questo caso modificare il pom.xml aggiungendo dependecies come <groupId>org.springframework.boot</groupId> - <artifactId>spring-boot-starter-data-jpa</artifactId>*/
+/*jakarta.perstistence è il pacchetto di annotazioni che si usano nel codice per dire a JPA cosa ritenere cosa e come. JavaPersistenceAPI è una specifica che serve a "mappare" oggetti JAVA a tabelle di DATABASE e gestire operazioni CRUD (Create, Read, Update, Delete). ATTENZIONE: affinchè si possano importare determinati pacchetti può essere necessario, come in questo caso, modificare il pom.xml aggiungendo dependecies come <groupId>org.springframework.boot</groupId> - <artifactId>spring-boot-starter-data-jpa</artifactId>*/
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +27,7 @@ public class Pizza {
     public Pizza(){
 
     }
-    /*Il secondo costruttore ha dei paramtri che occorrono per per creare istanze con tutti i valori */
+    /*Il secondo costruttore invece ha dei paramtri che occorrono per creare istanze con tutti i valori */
     public Pizza(String nome, String descrizione, String foto, BigDecimal prezzo){
 
         this.nome = nome;
