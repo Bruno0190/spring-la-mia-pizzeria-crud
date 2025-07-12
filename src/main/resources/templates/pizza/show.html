@@ -11,13 +11,17 @@
     <h1 th:text = "${pizza.nome}">Nome Pizza</h1>
     <p th:text = "${pizza.descrizione}">Descrizione ingredienti</p>
     <img th:src="${pizza.foto}" class="img-fluid" alt="Pizza">
-    <h3><strong>Prezzo: </strong><span th:text = ${pizza.prezzo}></span> €</h3>
+    <h3><strong>Prezzo: </strong><span th:text = "${pizza.prezzo}"></span> €</h3>
+    <h4>Offerte Speciali</h4>
     <ul class = "list-group">
-        <li class = "list-group-item" th:text = ${offerta.titolo}>Titolo</li>
-        <li class = "list-group-item" th:text = ${offerta.dataInizio}>Data inizio</li>
-        <li class = "list-group-item" th:text = ${offerta.dataFine}>Data fine</li>
+        <li class="list-group-item" th:if="${#lists.isEmpty(pizza.offerteSpeciali)}">
+            Nessuna offerta speciale per questa pizza
+        </li>
+        <li class="list-group-item" th:each="offerta : ${pizza.offerteSpeciali}">
+            <strong th:text="${offerta.titolo}">Titolo Offerta</strong><br />
+            <small>Da: <span th:text="${offerta.dataInizio}">data inizio</span> - A: <span th:text="${offerta.dataFine}">data fine</span></small>
+        </li>
     </ul>
-    <a href=""
     <a href="/" class="btn btn-secondary mt-3">Indietro</a>
 </body>
 </html>

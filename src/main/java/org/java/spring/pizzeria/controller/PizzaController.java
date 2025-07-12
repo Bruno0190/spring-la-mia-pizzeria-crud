@@ -51,14 +51,14 @@ public class PizzaController {
 
         model.addAttribute("pizza", new Pizza());
 
-        return "/pizza/create";
+        return "pizza/create";
     }
 
     @PostMapping("/pizza/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
-            return "/pizza/create";
+            return "pizza/create";
         }
         
         pizzaRepository.save(pizza);
@@ -70,8 +70,10 @@ public class PizzaController {
     public String createOfferta(Model model){
 
         model.addAttribute("offerta", new OffertaSpeciale());
+        // Passa la lista pizze al modello
+        model.addAttribute("pizze", pizzaRepository.findAll());  
 
-        return "/offerte/create";
+        return "offerte/create";
     }
     
 
@@ -79,7 +81,7 @@ public class PizzaController {
     public String store(@Valid @ModelAttribute("offerta") OffertaSpeciale offerta, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
-            return "/offerte/create";
+            return "offerte/create";
         }
         
         offertaSpecialeRepository.save(offerta);
