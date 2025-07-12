@@ -11,7 +11,7 @@
 
     <h1>Fattel Tu</h1>
     <div class="container mt-4">
-        <form action="#" id ="pizza-form" th:action ="@{/create}" th:object="${pizza}" method="post">
+        <form action="#" id ="pizza-form" th:action ="@{/pizza/create}" th:object="${pizza}" method="post">
         <div class="col-4">
             <label for="nome" class="form-label">Nome pizza</label>
             <input id="nome" class="form-control text-center" type="text" th:field="*{nome}">

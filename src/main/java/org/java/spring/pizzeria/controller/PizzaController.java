@@ -1,7 +1,10 @@
 package org.java.spring.pizzeria.controller;
 
+import org.java.spring.pizzeria.model.OffertaSpeciale;
 import org.java.spring.pizzeria.model.Pizza;
+import org.java.spring.pizzeria.repository.OffertaSpecialeRepository;
 import org.java.spring.pizzeria.repository.PizzaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,17 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import jakarta.validation.Valid;
 
 
-
-
-
-
-
-
 /*L'annotazione @Controller serve dire che questa classe è quella che risponde alle richieste HTTP e restituisce pagine web. è il primo impatto con l'utente come un cameriere che ti serve un menu appena giunti al ristorante. */
 @Controller
 public class PizzaController {
 
     private PizzaRepository pizzaRepository;
+    /*Uso Autowired per l'attributo OffertaSpeciale perchè l'ho inserito successivamente e questa notazione mi consente di non doverlo inserire nel costruttore. Spring cercherà automaticamente un bean di tipo OffertaSpecialeRepository e lo inserirà. */
+    @Autowired
+    private OffertaSpecialeRepository offertaSpecialeRepository;
 
     public PizzaController(PizzaRepository pizzaRepository){
         this.pizzaRepository = pizzaRepository;
@@ -46,7 +46,7 @@ public class PizzaController {
         return "pizza/show";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/pizza/create")
     public String create(Model model){
 
         model.addAttribute("pizza", new Pizza());
@@ -54,7 +54,7 @@ public class PizzaController {
         return "/pizza/create";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/pizza/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
@@ -65,7 +65,27 @@ public class PizzaController {
         
         return "redirect:/";
     }
+
+    @GetMapping("/offerte/create")
+    public String createOfferta(Model model){
+
+        model.addAttribute("offerta", new OffertaSpeciale());
+
+        return "/offerte/create";
+    }
     
+
+    @PostMapping("/offerte/create")
+    public String store(@Valid @ModelAttribute("offerta") OffertaSpeciale offerta, BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()){
+            return "/offerte/create";
+        }
+        
+        offertaSpecialeRepository.save(offerta);
+        
+        return "redirect:/";
+    }
     
     
 }

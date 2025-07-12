@@ -24,6 +24,7 @@
                 <tr th:each="pizza : ${pizze}">
                     <td th:text="${pizza.nome}">Nome Pizza</td>
                     <td th:text="${pizza.descrizione}">Descrizione Pizza</td>
+                    <img th:src="${pizza.foto}" class="img-fluid" alt="Pizza">
                     <td th:text="${#numbers.formatDecimal(pizza.prezzo, 1, 'COMMA', 2, 'POINT')}">Prezzo</td>
                     <td><a th:href="@{'/' + ${pizza.id}}" class="btn btn-primary btn-sm active" role="button">Dettagli</a></td>
                 </tr>

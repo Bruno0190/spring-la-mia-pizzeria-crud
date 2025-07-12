@@ -10,7 +10,14 @@
 <body>
     <h1 th:text = "${pizza.nome}">Nome Pizza</h1>
     <p th:text = "${pizza.descrizione}">Descrizione ingredienti</p>
+    <img th:src="${pizza.foto}" class="img-fluid" alt="Pizza">
     <h3><strong>Prezzo: </strong><span th:text = ${pizza.prezzo}></span> €</h3>
+    <ul class = "list-group">
+        <li class = "list-group-item" th:text = ${offerta.titolo}>Titolo</li>
+        <li class = "list-group-item" th:text = ${offerta.dataInizio}>Data inizio</li>
+        <li class = "list-group-item" th:text = ${offerta.dataFine}>Data fine</li>
+    </ul>
+    <a href=""
     <a href="/" class="btn btn-secondary mt-3">Indietro</a>
 </body>
 </html>
