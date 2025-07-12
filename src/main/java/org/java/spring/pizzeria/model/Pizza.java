@@ -1,5 +1,6 @@
 package org.java.spring.pizzeria.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.math.BigDecimal;
@@ -44,7 +45,7 @@ public class Pizza {
 
     /*L'annotazione sottostante sta ad indicare un rapporto 1 a Molti con un altra tabella. In particolare vuol dire che questa tabella (pizza) da sola ha più collegamenti con le tabelle offerteSpeciali (raccolte qui in un oggetto Lista) che sono un altro tipo di tabella/classe OfferstaSpeciale. mappedBy significa che il foreign key sta dall'altra parte (nell'altra tabella collegato tramite pizza.). CascadeType invece è un modo per non dover gestire manualmente le offerte nel controller, vengono sincronizzate le operazioni di salva, cancella e aggiorna. */
     @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL)
-    private List<OffertaSpeciale> offerteSpeciali;
+    private List<OffertaSpeciale> offerteSpeciali = new ArrayList<>();
 
     /*Quando Spring crea un oggetto Pizza partendo da questa classe, lo crea senza parametri perchè glieli inietta successivamente con i setter. Per tale motivo il costruttore è vuoto. Obbligatorio per JPA */
     public Pizza(){
@@ -96,9 +97,11 @@ public class Pizza {
     }
 
     // getter e setter per offerte
-    public List<OffertaSpeciale> getOfferte() {
-        return offerteSpeciali;
+    public void addOfferta(OffertaSpeciale offerta) {
+        offerteSpeciali.add(offerta);
+        offerta.setPizza(this);
     }
+
 
     public void setOfferte(List<OffertaSpeciale> offerteSpeciali) {
         this.offerteSpeciali = offerteSpeciali;

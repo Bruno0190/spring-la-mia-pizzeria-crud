@@ -30,16 +30,17 @@ public class SpringLaMiaPizzeriaCrudApplication {
 			Pizza diavola = new Pizza("Diavola", "Pomodoro, mozzarella, salame piccante", null, new BigDecimal("7.50"));
 			Pizza capricciosa = new Pizza("Capricciosa", "Mozzarella, gorgonzola, parmigiano", null, new BigDecimal("8.50"));
 
-			pizzaRepository.save(margherita);
-			pizzaRepository.save(diavola);
-			pizzaRepository.save(capricciosa);
+
 
 			//per le offerte
 			OffertaSpeciale offerta1 = new OffertaSpeciale("Promo Estate", LocalDate.of(2025, 8, 2), LocalDate.of(2025, 8, 10),margherita);
 			OffertaSpeciale offerta2 = new OffertaSpeciale("Promo Autunno", LocalDate.of(2025, 10, 2), LocalDate.of(2025, 10, 20),margherita);
 
-			margherita.getOfferte().add(offerta1);
-			margherita.getOfferte().add(offerta2);
+			margherita.addOfferta(offerta1);
+			margherita.addOfferta(offerta2);
+			pizzaRepository.save(margherita);
+			pizzaRepository.save(diavola);
+			pizzaRepository.save(capricciosa);
 
 
 
