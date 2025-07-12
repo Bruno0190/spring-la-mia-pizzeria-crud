@@ -23,7 +23,7 @@ public class OffertaSpeciale {
     private Long id;
 
     @NotBlank(message = "Nome obbligatorio")
-    @Size(max = 20, message = "Max 100 caratteri")
+    @Size(max = 100, message = "Max 100 caratteri")
     private String titolo;
     
     @FutureOrPresent(message = "La data deve essere odierna o futura")
@@ -43,7 +43,6 @@ public class OffertaSpeciale {
 
     public OffertaSpeciale(String titolo, LocalDate dataInizio, LocalDate dataFine, Pizza pizza){
 
-        this.id = id;
         this.titolo = titolo;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;

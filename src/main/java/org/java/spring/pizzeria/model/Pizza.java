@@ -97,14 +97,18 @@ public class Pizza {
     }
 
     // getter e setter per offerte
-    public void addOfferta(OffertaSpeciale offerta) {
-        offerteSpeciali.add(offerta);
-        offerta.setPizza(this);
+    public List<OffertaSpeciale> getOfferteSpeciali() {
+        return offerteSpeciali;
     }
 
-
-    public void setOfferte(List<OffertaSpeciale> offerteSpeciali) {
+    public void setOfferteSpeciali(List<OffertaSpeciale> offerteSpeciali) {
         this.offerteSpeciali = offerteSpeciali;
     }
+
+    public void addOfferta(OffertaSpeciale offerta) {
+    offerteSpeciali.add(offerta);
+    offerta.setPizza(this);
+}
+
 
 }

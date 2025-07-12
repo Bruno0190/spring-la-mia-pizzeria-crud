@@ -38,6 +38,8 @@ public class SpringLaMiaPizzeriaCrudApplication {
 
 			margherita.addOfferta(offerta1);
 			margherita.addOfferta(offerta2);
+
+
 			pizzaRepository.save(margherita);
 			pizzaRepository.save(diavola);
 			pizzaRepository.save(capricciosa);
