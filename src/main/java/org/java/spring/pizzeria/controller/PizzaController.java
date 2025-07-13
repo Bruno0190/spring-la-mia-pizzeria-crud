@@ -78,16 +78,26 @@ public class PizzaController {
     
 
     @PostMapping("/offerte/create")
-    public String store(@Valid @ModelAttribute("offerta") OffertaSpeciale offerta, BindingResult bindingResult, Model model) {
-
-        if(bindingResult.hasErrors()){
+    public String store(
+        @Valid @ModelAttribute("offerta") OffertaSpeciale offerta,
+        BindingResult bindingResult,
+        Model model
+    ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("pizze", pizzaRepository.findAll()); // Ricarica la lista in caso di errore
             return "offerte/create";
         }
-        
+
+        // Recupera la pizza dal suo ID
+        Long pizzaId = offerta.getPizza().getId(); // Assumendo che solo l'id sia stato inviato
+        Pizza pizza = pizzaRepository.findById(pizzaId).orElse(null);
+        offerta.setPizza(pizza); // Associa esplicitamente
+
         offertaSpecialeRepository.save(offerta);
-        
+
         return "redirect:/";
     }
+
     
     
 }

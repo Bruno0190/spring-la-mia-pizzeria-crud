@@ -28,7 +28,7 @@
             <label for="pizza" class="form-label">Pizza</label>
             <select id="pizza" class="form-select" th:field="*{pizza}">
                 <option value="" disabled selected>Scegli una pizza</option>
-                <option th:each="pizza : ${pizze}" th:value="${pizza}" th:text="${pizza.nome}"></option>
+                <option th:each="pizza : ${pizze}" th:value="${pizza.id}" th:text="${pizza.nome}"></option>
             </select>
         </div>
 
