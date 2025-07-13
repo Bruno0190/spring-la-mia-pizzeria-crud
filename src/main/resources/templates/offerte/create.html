@@ -24,6 +24,13 @@
             <label for="dataFine" class="form-label">Data di scadenza offerta</label>
             <input id="dataFine" class="form-control text-center" type="date" th:field="*{dataFine}">
         </div>
+        <div class="col-4">
+            <label for="pizza" class="form-label">Pizza</label>
+            <select id="pizza" class="form-select" th:field="*{pizza}">
+                <option value="" disabled selected>Scegli una pizza</option>
+                <option th:each="pizza : ${pizze}" th:value="${pizza}" th:text="${pizza.nome}"></option>
+            </select>
+        </div>
 
         <div class="col-12 p-3">
             <button type="submit" class="btn btn-secondary">Salva offerta</button>
