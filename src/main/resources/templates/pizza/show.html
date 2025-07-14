@@ -26,10 +26,15 @@
     </ul>
 
     <h4>Ingredienti</h4>
-    <ul>
-        <li th:each="ingrediente : ${pizza.ingredienti}" th:text="${ingrediente.nome}">Ingrediente</li>
-        <li th:if="${#lists.isEmpty(pizza.ingredienti)}">Nessun ingrediente associato</li>
+    <ul class="list-group">
+        <li class="list-group-item" th:if="${#lists.isEmpty(pizza.ingredienti)}">
+            Nessun ingrediente associato a questa pizza
+        </li>
+        <li class="list-group-item" th:each="ingrediente : ${pizza.ingredienti}">
+            <span th:text="${ingrediente.nome}">Nome ingrediente</span>
+        </li>
     </ul>
+
 
 
 

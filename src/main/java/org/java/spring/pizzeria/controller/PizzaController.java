@@ -47,7 +47,8 @@ public class PizzaController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("pizza", pizzaRepository.findById(id).get());
+        Pizza pizza = pizzaRepository.findById(id).orElse(null);
+        model.addAttribute("pizza", pizza);
         return "pizza/show";
     }
 
@@ -114,9 +115,9 @@ public class PizzaController {
     @GetMapping("/ingredienti/create")
     public String createIngrediente(Model model) {
         model.addAttribute("ingrediente", new Ingrediente());
+        model.addAttribute("pizze", pizzaRepository.findAll());  // <-- qui passi tutte le pizze!
         return "ingredienti/create";
     }
-
 
     @PostMapping("/ingredienti/create")
     public String storeIngrediente(@Valid @ModelAttribute("ingrediente") Ingrediente ingrediente, BindingResult bindingResult) {
