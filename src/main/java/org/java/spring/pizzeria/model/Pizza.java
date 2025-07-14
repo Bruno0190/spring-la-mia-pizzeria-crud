@@ -3,10 +3,15 @@ package org.java.spring.pizzeria.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
 import java.math.BigDecimal;
 /*jakarta.perstistence è il pacchetto di annotazioni che si usano nel codice per dire a JPA cosa ritenere cosa e come. JavaPersistenceAPI è una specifica che serve a "mappare" oggetti JAVA a tabelle di DATABASE e gestire operazioni CRUD (Create, Read, Update, Delete). ATTENZIONE: affinchè si possano importare determinati pacchetti può essere necessario, come in questo caso, modificare il pom.xml aggiungendo dependecies come <groupId>org.springframework.boot</groupId> - <artifactId>spring-boot-starter-data-jpa</artifactId>*/
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +22,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
+
 
 
 /*Le annotazioni con la chiocciola servono a indicare a Spring come deve trattare quelle parti di codice per l'appunto "annotate". Entity serve a dire che la classe Pizza è una tabella nel database. JPA mappa questa classe ad una tabella */
@@ -46,6 +53,15 @@ public class Pizza {
     /*L'annotazione sottostante sta ad indicare un rapporto 1 a Molti con un altra tabella. In particolare vuol dire che questa tabella (pizza) da sola ha più collegamenti con le tabelle offerteSpeciali (raccolte qui in un oggetto Lista) che sono un altro tipo di tabella/classe OfferstaSpeciale. mappedBy significa che il foreign key sta dall'altra parte (nell'altra tabella collegato tramite pizza.). CascadeType invece è un modo per non dover gestire manualmente le offerte nel controller, vengono sincronizzate le operazioni di salva, cancella e aggiorna. */
     @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL)
     private List<OffertaSpeciale> offerteSpeciali = new ArrayList<>();
+
+
+    @ManyToMany
+    @JoinTable(
+        name = "pizza_ingrediente",
+        joinColumns = @JoinColumn(name = "pizza_id"),
+        inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
+    )
+    private List<Ingrediente> ingredienti = new ArrayList<>();
 
     /*Quando Spring crea un oggetto Pizza partendo da questa classe, lo crea senza parametri perchè glieli inietta successivamente con i setter. Per tale motivo il costruttore è vuoto. Obbligatorio per JPA */
     public Pizza(){
@@ -80,6 +96,10 @@ public class Pizza {
         return prezzo;
     }
 
+    public List<Ingrediente> getIngredienti() {
+        return ingredienti;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -108,7 +128,16 @@ public class Pizza {
     public void addOfferta(OffertaSpeciale offerta) {
     offerteSpeciali.add(offerta);
     offerta.setPizza(this);
-}
+    }
+
+    public void setIngredienti(List<Ingrediente> ingredienti) {
+        this.ingredienti = ingredienti;
+    }
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        this.ingredienti.add(ingrediente);
+    }
+
 
 
 }

@@ -1,7 +1,9 @@
 package org.java.spring.pizzeria.controller;
 
+import org.java.spring.pizzeria.model.Ingrediente;
 import org.java.spring.pizzeria.model.OffertaSpeciale;
 import org.java.spring.pizzeria.model.Pizza;
+import org.java.spring.pizzeria.repository.IngredienteRepository;
 import org.java.spring.pizzeria.repository.OffertaSpecialeRepository;
 import org.java.spring.pizzeria.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class PizzaController {
     /*Uso Autowired per l'attributo OffertaSpeciale perchè l'ho inserito successivamente e questa notazione mi consente di non doverlo inserire nel costruttore. Spring cercherà automaticamente un bean di tipo OffertaSpecialeRepository e lo inserirà. */
     @Autowired
     private OffertaSpecialeRepository offertaSpecialeRepository;
+
+    @Autowired
+    private IngredienteRepository ingredienteRepository;
 
     public PizzaController(PizzaRepository pizzaRepository){
         this.pizzaRepository = pizzaRepository;
@@ -50,7 +55,8 @@ public class PizzaController {
     public String create(Model model){
 
         model.addAttribute("pizza", new Pizza());
-
+        
+        model.addAttribute("ingredienti", ingredienteRepository.findAll());
         return "pizza/create";
     }
 
@@ -58,6 +64,7 @@ public class PizzaController {
     public String store(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("ingredienti", ingredienteRepository.findAll());
             return "pizza/create";
         }
         
@@ -75,7 +82,6 @@ public class PizzaController {
 
         return "offerte/create";
     }
-    
 
     @PostMapping("/offerte/create")
     public String store(
@@ -96,6 +102,29 @@ public class PizzaController {
         offertaSpecialeRepository.save(offerta);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/ingredienti")
+    public String indexIngredienti(Model model) {
+        model.addAttribute("ingredienti", ingredienteRepository.findAll());
+        return "ingredienti/index";
+    }
+
+
+    @GetMapping("/ingredienti/create")
+    public String createIngrediente(Model model) {
+        model.addAttribute("ingrediente", new Ingrediente());
+        return "ingredienti/create";
+    }
+
+
+    @PostMapping("/ingredienti/create")
+    public String storeIngrediente(@Valid @ModelAttribute("ingrediente") Ingrediente ingrediente, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "ingredienti/create";
+        }
+        ingredienteRepository.save(ingrediente);
+        return "redirect:/ingredienti";
     }
 
     
